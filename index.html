@@ -5,22 +5,27 @@
   </head>
   <body>
     <script>
-      function solution(n) {
-        let answer = '';
-        function binary(n) {
-          if (n == 0) {
-            return;
+      function solution(m, ps, pt) {
+        let max = Number.MIN_SAFE_INTEGER;
+
+        function DFS(L, sumPt, sumPs) {
+          console.log(L, sumPt);
+          if (sumPt > m) return;
+          if (L == ps.length) {
+            max = Math.max(sumPs, max);
           } else {
-            binary(Math.floor(n / 2));
-            console.log(n % 2);
-            answer += n % 2;
+            DFS(L + 1, sumPt + pt[L], sumPs + ps[L]);
+            DFS(L + 1, sumPt, sumPs);
           }
-          return answer;
         }
-        return Number(binary(n, answer));
+
+        DFS(0, 0, 0);
+        return max;
       }
 
-      console.log(solution(11));
+      let ps = [10, 25, 15, 6, 7];
+      let pt = [5, 12, 8, 3, 4];
+      console.log(solution(20, ps, pt));
     </script>
   </body>
 </html>
